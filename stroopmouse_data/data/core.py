@@ -20,7 +20,7 @@ class Experiment():
     self.block: str
         Number corresponding to the experimental block for that mouse/date.
     self.data: h5py.File object
-        The h5py object containing all experimental data.
+        The h5py object containing all experimedfadfntal data.
     self.num_trials: int
         The number of trials in the corresponding experiment.
 
