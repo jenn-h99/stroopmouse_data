@@ -204,86 +204,86 @@ class DataSet():
         return mouse_objects
         
     
-def as_array(nested_vectors):
-    '''
-    Converts a 1D numpy array with nested 1D numpy arrays of variable length
-    into a single 2D numpy array, with width equal to length of the longest
-    nested array. Missing values are np.nan.
+    def as_array(nested_vectors):
+        '''
+        Converts a 1D numpy array with nested 1D numpy arrays of variable length
+        into a single 2D numpy array, with width equal to length of the longest
+        nested array. Missing values are np.nan.
 
-    Arguments:
-    ----------
-    nested_vectors: 1D numpy array, dtype=np.ndarray
-        1D numpy array with nested 1D numpy arrays (can be different lengths).
+        Arguments:
+        ----------
+        nested_vectors: 1D numpy array, dtype=np.ndarray
+            1D numpy array with nested 1D numpy arrays (can be different lengths).
 
-    Returns:
-    --------
-    output_array: 2D numpy array
-        2D numpy array containing all nested vectors, with np.nan in missing
-        places.
-    '''
+        Returns:
+        --------
+        output_array: 2D numpy array
+            2D numpy array containing all nested vectors, with np.nan in missing
+            places.
+        '''
 
-    max_length = max([len(i) for i in nested_vectors])
-    output_array = np.empty(shape=[len(nested_vectors), max_length])
-    output_array.fill(np.nan)
+        max_length = max([len(i) for i in nested_vectors])
+        output_array = np.empty(shape=[len(nested_vectors), max_length])
+        output_array.fill(np.nan)
 
-    for vector in range(len(nested_vectors)):
-        vector_length = len(nested_vectors[vector])
-        output_array[vector,0:vector_length] = nested_vectors[vector]
+        for vector in range(len(nested_vectors)):
+            vector_length = len(nested_vectors[vector])
+            output_array[vector,0:vector_length] = nested_vectors[vector]
 
-    return output_array
+        return output_array
 
-def as_vector(nested_vectors):
-    '''
-    Converts a 1D numpy array with nested 1D numpy arrays of variable length
-    into a single 1D numpy array with all data concatenated.
+    def as_vector(nested_vectors):
+        '''
+        Converts a 1D numpy array with nested 1D numpy arrays of variable length
+        into a single 1D numpy array with all data concatenated.
 
-    Arguments:
-    ----------
-    nested_vectors: 1D numpy array, dtype=np.ndarray
-        1D numpy array with nested 1D numpy arrays (can be different lengths).
+        Arguments:
+        ----------
+        nested_vectors: 1D numpy array, dtype=np.ndarray
+            1D numpy array with nested 1D numpy arrays (can be different lengths).
 
-    Returns:
-    --------
-    output_array: 1D numpy array
-        1D numpy array containing all vectors concatenated together. 
-    '''
-    output_vector = np.array([])
+        Returns:
+        --------
+        output_array: 1D numpy array
+            1D numpy array containing all vectors concatenated together.
+        '''
+        output_vector = np.array([])
 
-    for vector in nested_vectors:
-        output_vector = np.append(output_vector, vector)
-    return output_vector
+        for vector in nested_vectors:
+            output_vector = np.append(output_vector, vector)
+        return output_vector
 
-def dataset_load(data_repo, dataset_repo):
-    '''
-    Gets the user to choose one of many dataset files in dataset_repo.
-    Once these datasets are chosen, a corresponding DataSet object is 
-    instantiated and appended to a list.
+    def dataset_load(data_repo, dataset_repo):
+        '''
+        Gets the user to choose one of many dataset files in dataset_repo.
+        Once these datasets are chosen, a corresponding DataSet object is
+        instantiated and appended to a list.
 
-    Returns:
-    --------
-    datasets: list (DataSet objects)
-        A list containing a DataSet object for each selected dataset file.
-    dataset_names: list (str)
-        A list containing a user input name for each selected dataset.
-        To be used as label in figures.
-    '''
-    datasets = []
-    dataset_names = []
-    file_search = True
-    while file_search == True:   
-        fname = input('Enter dataset name (ls:list): ')
-        
-        if fname == 'ls':  
-            print(sorted(os.listdir(dataset_repo)))
-            
-        elif f'{fname}.hdf5' in os.listdir(dataset_repo):
-            datasets.append(DataSet(fname, data_repo, dataset_repo))
-            dataset_names.append(input('Enter label for this dataset: '))
-            
-            if input('Add another dataset?(y/n): ') == 'n':
-                file_search = False
-                
-        else:
-            print('Dataset file not found.')
+        Returns:
+        --------
+        datasets: list (DataSet objects)
+            A list containing a DataSet object for each selected dataset file.
+        dataset_names: list (str)
+            A list containing a user input name for each selected dataset.
+            To be used as label in figures.
+        '''
+        datasets = []
+        dataset_names = []
+        file_search = True
+        while file_search == True:
+            fname = input('Enter dataset name (ls:list): ')
 
-    return datasets, dataset_names
+            if fname == 'ls':
+                print(sorted(os.listdir(dataset_repo)))
+
+            elif f'{fname}.hdf5' in os.listdir(dataset_repo):
+                datasets.append(DataSet(fname, data_repo, dataset_repo))
+                dataset_names.append(input('Enter label for this dataset: '))
+
+                if input('Add another dataset?(y/n): ') == 'n':
+                    file_search = False
+
+            else:
+                print('Dataset file not found.')
+
+        return datasets, dataset_names
