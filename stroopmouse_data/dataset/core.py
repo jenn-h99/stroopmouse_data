@@ -205,8 +205,8 @@ class Mouse():
         self.remove_date(date)
         self.date_list.append(date)
         self.group.require_group(date)
-        block_path = f'{self.date_repo}/{date}/'
-        obj = Date(date, self.group[date], block_path, self, self.dataset)
+        block_path = f'{self.date_repo}/'  # Remove the /{date}/ part
+        obj = Date(date, self.group[date], block_path, self.mouse, self.dataset)
         self.date_objects.append(obj)
         obj.choose_blocks()
 
