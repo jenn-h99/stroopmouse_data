@@ -195,7 +195,7 @@ class Mouse():
         self.date_objects = []
 
         for date in self.date_list:
-            block_path = f'{self.date_repo}/{date}/'
+            block_path = f'{self.date_repo}/'
             self.date_objects.append(Date(date, self.group[date],
                                           block_path, self, self.dataset))
 
