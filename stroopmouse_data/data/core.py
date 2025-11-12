@@ -253,12 +253,11 @@ class DataSet():
             output_vector = np.append(output_vector, vector)
         return output_vector
 
-    def dataset_load(data_repo, dataset_repo):
+    def dataset_load(data_repo, dataset_repo_path):
         '''
-        Gets the user to choose one of many dataset files in dataset_repo.
+        Gets the user to choose one of many dataset files in dataset_repo_path.
         Once these datasets are chosen, a corresponding DataSet object is
         instantiated and appended to a list.
-
         Returns:
         --------
         datasets: list (DataSet objects)
@@ -272,18 +271,13 @@ class DataSet():
         file_search = True
         while file_search == True:
             fname = input('Enter dataset name (ls:list): ')
-
             if fname == 'ls':
-                print(sorted(os.listdir(dataset_repo)))
-
-            elif f'{fname}.hdf5' in os.listdir(dataset_repo):
-                datasets.append(DataSet(fname, data_repo, dataset_repo))
+                print(sorted(os.listdir(dataset_repo_path)))
+            elif f'{fname}.hdf5' in os.listdir(dataset_repo_path):
+                datasets.append(DataSet(fname, data_repo, dataset_repo_path))
                 dataset_names.append(input('Enter label for this dataset: '))
-
                 if input('Add another dataset?(y/n): ') == 'n':
                     file_search = False
-
             else:
                 print('Dataset file not found.')
-
         return datasets, dataset_names
