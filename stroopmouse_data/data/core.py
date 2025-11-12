@@ -39,7 +39,7 @@ class Experiment():
         self.mouse = mouse
         self.date = date
         self.block = block
-        self.data_repo = data_repo
+        self.data_repo = data_repo if data_repo.endswith('/') else data_repo + '/'
 
         data_path = os.path.join(self.mouse, self.date, 
                          f'ms{self.mouse}_{self.date}_block{self.block}.hdf5')
@@ -48,6 +48,9 @@ class Experiment():
         self.data = h5py.File(full_path, 'r')
         print(f'Opening mouse {self.mouse}, {self.date},'
             f'block {self.block}')
+        print(f"DEBUG: data_repo = {data_repo}")
+        print(f"DEBUG: data_path = {data_path}")
+        print(f"DEBUG: full_path = {full_path}")
 
                 
 class Mouse():
