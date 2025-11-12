@@ -188,9 +188,17 @@ class Mouse():
         self.group = hdf_group
         self.dataset = dataset
         self.date_repo = f'{data_repo}/{self.name}'
-        self.all_dates = sorted(os.listdir(self.date_repo))
-        if '.DS_Store' in self.all_dates:
-            self.all_dates.remove('.DS_Store')
+        all_files = sorted(os.listdir(self.date_repo))
+        self.all_dates = []
+        for filename in all_files:
+            if filename.endswith('.hdf5') and filename.startswith('ms'):
+                # Extract date from format: ms9754_2025-09-21_block1.hdf5
+                parts = filename.split('_')
+                if len(parts) >= 3:
+                    date = parts[1]  # Gets '2025-09-21'
+                    if date not in self.all_dates:
+                        self.all_dates.append(date)
+        self.all_dates = sorted(self.all_dates)
         self.date_list = list(self.group.keys())
         self.date_objects = []
 
