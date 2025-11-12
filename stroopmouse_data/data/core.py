@@ -41,9 +41,9 @@ class Experiment():
         self.block = block
         self.data_repo = data_repo
 
-        data_path = (f'{self.mouse}/{self.date}/'
-            f'ms{self.mouse}_{self.date}_block{self.block}.hdf5')
-        full_path = data_repo + data_path
+        data_path = os.path.join(self.mouse, self.date, 
+                         f'ms{self.mouse}_{self.date}_block{self.block}.hdf5')
+        full_path = os.path.join(data_repo, data_path)
 
         self.data = h5py.File(full_path, 'r')
         print(f'Opening mouse {self.mouse}, {self.date},'
